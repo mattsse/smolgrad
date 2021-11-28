@@ -21,7 +21,7 @@ pub mod gpu;
 //    3.1 execute the graph by calling `forward` on every node in the graph
 //    3.2 `forward` should return the output tensors and the backward type
 
-// TODO: split forward and backward into two traits where forward returns Box<dyn Backward>
+// TODO: split forward and backward into two traits where forward returns Box<dyn Backward>?
 
 /// The computational graph
 ///
@@ -72,10 +72,6 @@ pub enum Term {
     Term(Box<Term>),
 }
 
-// registry https://github.com/iqlusioninc/abscissa/blob/e49ef7b61786e15f223c5f9dcdd5890003835d2e/core/src/component/registry.rs
-
-// https://github.com/iqlusioninc/abscissa/pull/424/files
-
 pub trait Func {
     /// Receives the gradient of the output tensor with respect to some scalar
     /// value and computes the gradient of the input tensors with respect to the
@@ -103,7 +99,7 @@ pub struct FunctionContext<D> {
 }
 
 impl<D> FunctionContext<D> {
-    fn do_apply(lhs: &Tensor<D>, rhs: &Tensor<D>) {}
+    fn do_apply(_lhs: &Tensor<D>, _rhs: &Tensor<D>) {}
 
     fn apply(&mut self) {}
 

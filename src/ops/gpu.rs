@@ -12,9 +12,7 @@ pub type Result<T> = std::result::Result<T, GpuError>;
 
 pub struct OpenCL {}
 
-impl Backend for OpenCL {
-    type Context = ();
-}
+impl Backend for OpenCL {}
 
 /// Various erros that can occur when working with an OpenCL backend
 #[derive(Debug, Error)]
@@ -699,7 +697,7 @@ mod tests {
         }
     }
 
-    fn binary_ops_test<F>(ops: BinaryOps, f: F)
+    fn binary_ops_test<F>(ops: BinaryOps, expected: F)
     where
         F: Fn(f32, f32) -> f32,
     {
@@ -715,7 +713,7 @@ mod tests {
             let mut nd = a.clone();
 
             Zip::from(&mut nd).and(&b).for_each(|x, y| {
-                *x = f(*x, *y);
+                *x = expected(*x, *y);
             });
 
             let ocl = binary_op_ocl(ops, &a, &b, prg, queue.clone()).unwrap();
@@ -776,7 +774,13 @@ mod tests {
 
     #[test]
     fn binary_eq_opencl_test() {
-        binary_ops_test(BinaryOps::Eq, |a, b| if a == b { 1.0 } else { 0.0 });
+        binary_ops_test(BinaryOps::Eq, |a, b| {
+            if (a - b).abs() < 0.0000001 {
+                1.0
+            } else {
+                0.0
+            }
+        });
     }
 
     #[test]

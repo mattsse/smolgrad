@@ -1,5 +1,5 @@
 use crate::ops::gpu::OpenCLKernelCtx;
-use crate::ops::{Backend, OpenCL};
+
 use ndarray::{Array, Array2, Dimension};
 
 // Requirements:
@@ -37,9 +37,9 @@ impl<D: Dimension> Tensor<D> {
     pub fn ones() {}
     pub fn randn() {}
     pub fn arange() {}
-    pub fn uniform<Dim: Dimension>(shape: Dim) {}
+    pub fn uniform<Dim: Dimension>(_shape: Dim) {}
 
-    pub fn dot<W: Dimension>(&self, w: &Array<f32, W>) -> Array2<f32> {
+    pub fn dot<W: Dimension>(&self, _w: &Array<f32, W>) -> Array2<f32> {
         todo!()
     }
 

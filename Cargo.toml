@@ -20,6 +20,3 @@ generational-arena = "0.2.8"
 
 [dev-dependencies]
 ndarray-rand = "0.14.0"
-
-[workspace]
-members = ['neuronika', 'rust-autograd']
